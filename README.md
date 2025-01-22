@@ -1,136 +1,111 @@
-# A Containerized Dev Environment for Elixir and the Phoenix Framework
+# Athanor: Containerized Elixir Environments
 
 ## Introduction
 
-A dockerized development environment to work on [Elixir](https://github.com/elixir-lang/elixir) and [Phoenix](https://github.com/phoenixframework/phoenix) framework projects while keeping the host environment pristine.
+Athanor is a foundational toolset designed to bootstrap containerized environments for Elixir and Phoenix-based projects. This project is forked from [docker-phoenix](https://github.com/nicbet/docker-phoenix), which served as inspiration and initial foundation for containerized development tailored to Elixir and Phoenix workflows.
 
-This project was conceived to deal with the issues of running different Elixir and Phoenix versions and supporting the development and maintenance of apps built with different Elixir and Phoenix versions.
+### What are Elixir and Phoenix?
 
-Maybe you are working on multiple different projects, built with different versions of the Phoenix framework, or you are working on a long-lived Elixir or Phoenix project. In either case you are likely to hit a version conflict. Phoenix and Elixir are still young and evolving which is great - but some of the changes will likely break your application code. This repository aims to make things easier for you by giving you a straightforward path in swapping out your Elixir and Phoenix environment.
+- **Elixir**: Elixir is a functional, concurrent programming language built on the Erlang Virtual Machine (BEAM). It is designed for building scalable, maintainable applications with a focus on performance and fault tolerance.
 
-## Notable Changes
+- **Phoenix**: Phoenix is a modern web development framework written in Elixir, known for its speed, scalability, and real-time capabilities. It simplifies building highly performant web applications and APIs.
 
-- **Switch to Bullseye base image**
-  This is a potentially breaking change if you are using this image / repository as a base for your own customized images. We're switching from the upstream **Alpine** images to **Debian Bullseye** images, since most build tools and libraries, as well as the Erlang documentation are not included in the Alpine stream. Since the primary focus of this repository is to give developers easy access to the entire toolchain to build their Elixir/Phoenix applications with minimal requirements on the host, and as much of an optimal out-of-the-box dev experience with VSCode, we've decided that we'd rather have full toolchains and documentation over smaller image sizes.
+#### Learn More
+Here is a short video introducing Elixir and very briefly Phoenix:
 
-- **Docker Phoenix 1.7.10 **
-  The default database for the `compose` stack and `devcontainer` is now PostgreSQL 16
+<br>
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=R7t7zca8SyM&list=PLi4CU1p4A8FcJwCYi3YHSmI4-Tx-gXile">
+    <img src="https://img.youtube.com/vi/R7t7zca8SyM/0.jpg" alt="Introduction to Elixir and Phoenix">
+  </a>
+</div>
+<br>
 
-- **Docker Phoenix 1.7.5**
-  The image now includes the `build-base` package by default to support compile-time dependencies like `bcrypt` for `mix phx.gen.auth`
+By modularizing and targeting specific use cases, Athanor aims to provide developers with tools and extensions directly within their VSCode projects, accessible through devcontainers. Inspired by alchemical principles, Athanor emphasizes iteration, experimentation, and refinement as key to achieving development excellence.
 
-- **#1d570c14007b7750da776e0b6bd2b7568ec67de5**
-  We've switched the default branch of the repository from `master` to `main`. Please update your local repository refs!
+## Why Containerize Elixir Applications?
 
-- **Docker Phoenix 1.6.15**
-  We are currently in the process of switching to `Alpine Linux` based images, which are significantly smaller (~150MB vs 1.7GB). Expect the next release to make `-alpine` the new default for the dev environments. As a result, you will need to rebuild your VSCode dev containers and your application code.
+Although Elixir runs on the Erlang Virtual Machine (BEAM), containerizing Elixir applications offers several benefits:
 
-- **Docker Phoenix 1.6.13**
-  Starting with this version, we've switched the Docker image hosted at Docker Hub (`docker pull nicbet/phoenix:1.6.13`) to M1 Mac, i.e., `linux/arm64/v8` architecture. If you are developing on an Intel machine, you will need to build the docker image on your platform to get started run `make docker-image`.
+- **Environment Standardization**: Ensures consistent runtime environments across development, staging, and production.
+- **Dependency Isolation**: Avoids conflicts by isolating specific versions of Elixir, Erlang/OTP, and other dependencies.
+- **Simplified Deployment**: Packages the application and its dependencies, making deployment processes more predictable.
+- **Scalability and Orchestration**: Integrates seamlessly with tools like Kubernetes for managing distributed and scalable systems.
+- **CI/CD Integration**: Enables consistent testing and deployment pipelines using containerized environments.
+
+## Core Philosophy: "Let It Crash"
+
+Adopting the philosophy of "let it crash," Athanor embraces the symbolic Negredo, where development begins in chaos and emerges with clarity and purpose. Each failure is an opportunity to refine and better understand the needs of the project, fostering resilience and adaptability. This ethos is woven into the roadmap and release strategy, allowing for innovation through trial and error.
+
+## Repository Structure
+
+- **Main Branch**: Houses all documentation and centralized codebase for reference and development.
+- **Version Branches**: Contain targeted, stable releases tailored to specific development use cases. Releases will be named to reflect their alchemical, esoteric, astrological, or divine inspiration, aligning with the purpose they aim to serve.
+
+  Examples:
+
+| Release Name         | Description                                                                |
+|----------------------|----------------------------------------------------------------------------|
+| `v1.0-Prima_Materia` | Foundational release for Elixir and Phoenix projects.                      |
+| `v1.1-Sol_Unitas`    | Includes Docker Dev Container images for centralized remote collaboration. |
+| `v2.0-Ordo_Ab_Chao`  | Provides standardized configurations for distributed teams.                |
+| `v3.0-Ignis_Ardens`  | Adds tools and configurations for scalable cloud deployments.              |
+
+## Planning Releases
+
+### Agile Roadmap
+
+Releases are iterative and follow an agile methodology to encourage rapid prototyping and feedback. Each release cycle incorporates:
+
+1. **Discovery**: Define the problem or use case.
+2. **Implementation**: Build and test solutions within a controlled branch.
+3. **Review**: Gather community feedback.
+4. **Stabilization**: Finalize and merge to the version branch.
+
+### Release Schedule
+
+- **Initial MVP (v1.0)**
+
+  - Base Docker configuration for Elixir and Phoenix.
+  - Minimal VSCode devcontainer setup.
+  - Basic documentation for integration.
+
+- **v1.1: Collaboration Enhancements**
+
+  - Add support for centralized Docker Dev Container images.
+  - Include tooling for remote debugging and collaboration.
+
+- **v2.0: Standardized Development**
+
+  - Provide standardized VSCode devcontainers.
+  - Expand documentation to support diverse use cases.
+
+- **Future Milestones**
+
+  - Integrate additional languages and frameworks.
+  - Explore non-BEAM-based use cases.
+  - Enable automated environment provisioning via CI/CD pipelines.
+
+## Contributions
+
+We welcome contributions that align with Athanor's philosophy. Contributors are encouraged to:
+
+- Share insights gained from failed attempts or unmet edge cases.
+- Propose enhancements and features through issues and pull requests.
+- Participate in roadmap discussions to shape future releases.
 
 ## Getting Started
 
-As of December 2022, we recommend using the [Visual Studio Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) approach over the command line. See below for details.
-
-### Visual Studio Code (Dev Containers)
-
-#### Setting up a brand-new project
-
-If you are using a recent version of [Visual Studio Code](https://code.visualstudio.com/) with the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers), we highly recommend going this route for a much improved development experience out of the box.
-
-1. Use [Degit](https://github.com/Rich-Harris/degit) to quickly clone this project as a scaffold for your new project, for example an app called `hello_world`.
-
-   ```css
-   npx degit nicbet/docker-phoenix#1.7.12 hello_world
-   ```
-
-2. Open the `hello_world` folder in Visual Studio Code
-
-3. When asked, select `Reopen in container`. Visual Studio code will create a complete application stack including a PostgreSQL database, and mount your local `./app` folder as the root folder for the development environment.
-
-4. After initialization of your dev environment finishes, open the `Terminal` tab in Visual Studio Code.
-
-5. Create your new Phoenix application with the following command (**note the `.`**!):
-
+1. Clone the repository:
    ```bash
-   mix phx.new . hello_world
+   git clone https://github.com/VitriolumCode/Athanor.git
    ```
+2. Check out the main branch for documentation or switch to a version branch for targeted development:
+   ```bash
+   git checkout main
+   ```
+3. Follow the setup instructions in the README file within the desired version branch.
 
-6. As the mix command runs, you will see your Visual Studio Code file explorer populate with the files of your new phoenix app. All these files are available outside your development environment in the `./app` folder.
+---
 
-**Note:** You don't need to use `degit`. Alternatively, you can clone this repository and remove the `.git` folder manually.
-
-#### Configuring the Database Connection
-
-Both, the docker-compose stack started with the `docker-compose.yml` file included with this repository and the Visual Studio Code Dev Containers stack define a service called `db` for running a PostgreSQL database that is available to the main application container via the hostname `db`. By default Phoenix assumes that you are running a database locally. In order to use the `db` service with your application you will need to modify your Phoenix config and point `Ecto` to the database host.
-
-To use the included database with your phoenix application you will need to modify the Ecto configuration `config/dev.exs` and point it to the DB container:
-
-```elixir
-# Configure your database
-config :test, Test.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  hostname: "db",
-  username: "postgres",
-  password: "postgres",
-  # ...
-  pool_size: 10
-```
-
-#### Running your Application
-
-To start you application in development mode you will first need to change your Phoenix configuration to bind the `phx.server` to `0.0.0.0`, so that the container exposes the `phx.server` to the host network.
-
-To bind the `phx.server` to all interfaces, edit your `config/dev.exs` file and set the endpoint listen address to `0.0.0.0`:
-
-```elixir
-config :hello_world, HelloWorldWeb.Endpoint,
-  http: [ip: {0, 0, 0, 0}, port: 4000],
-  ...
-```
-
-From the VSCode terminal you can run the Phoenix application server with:
-
-```sh
-mix phx.server
-```
-
-Once the startup is completed, your app will be available at http://localhost:4000
-
-### Using the Command Line instead of Dev Containers
-
-After cloning the repository, you can use the included `./run`, `./mix`, `./npm`, and `./yarn` scripts to execute commands in the development environment described by included `docker-compose.yml` file. For instance, running `./mix phx.new . hello_world` would generate a new phoenix application called `hello_world`. Similarly to the Visual Studio Code Dev Containers approach, your project files will be locally stored in the `./app` container which is mounted to `/app` inside the development environment.
-
-The instructions for changing the database connection and bind address as described above apply here as well.
-
-To run any command inside the dev container, you can use the `./run` script and pass the command and its arguments.
-
-```sh
-./run iex -S mix
-```
-
-## Building the image for your platform
-
-You can locally build the container image with the included Makefile:
-
-```sh
-make docker-image
-```
-
-## Usage with an existing project
-
-You can use this project to dockerize the development environment for an existing project. Follow the steps above, but instead of initializing a new application with `mix phx.new`, copy your existing project code to the `./app` subdirectory. This will make your existing code available in the dockerized dev environment.
-
-## Contributing
-
-This project is intended to be a safe, welcoming space for collaboration. Contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct. We recommend reading the [contributing guide](./docs/CONTRIBUTING.md) as well.
-
-## License
-
-Docker Phoenix is available as open source under the terms of the [GNU Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
-
-## Contributors
-
-Docker Phoenix is built by members of the Open Source community, including:
-
-<img src="https://avatars.githubusercontent.com/apenney?s=64" alt="apenney" width="32" />, <img src="https://avatars.githubusercontent.com/cruisemaniac?s=64" alt="cruisemaniac" width="32" />, <img src="https://avatars.githubusercontent.com/homanchou?s=64" alt="homanchou" width="32"/>, <img src="https://avatars.githubusercontent.com/tmr08c?s=64" alt="tmr08c" width="32" />, <img src="https://avatars.githubusercontent.com/jacknoble?s=64" alt="jacknoble" width="32" />, <img src="https://avatars.githubusercontent.com/ravloony?s=64" alt="ravloony" width="32" />, <img src="https://avatars.githubusercontent.com/asifaly?s=64" alt="asifaly" width="32" /> ,<img src="https://avatars.githubusercontent.com/ajmeese7?s=64" alt="ajmeese7" width="32" />, <img src="https://avatars.githubusercontent.com/restlessronin?s=64" alt="restlessronin" width="32" />
+Athanor is an evolving project with the ultimate goal of simplifying and enriching the development experience. Together, we can transform chaos into order and build a toolkit worthy of the Great Work.
